@@ -1,0 +1,41 @@
+body{
+    font-family: "Oswald", sans-serif;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color:white ;
+}
+
+nav{
+    background-color: black;
+    color: white;
+    padding: 20px 50px;
+}
+.navtop{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.search{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.navBottom{
+    display: flex;
+    align-items: center ;
+    justify-content: center;
+    background-color: black;
+}
+.menuItem{
+    margin-right: 55px;
+    color: white;
+    cursor: pointer;
+    font-weight: 400;
+}
+#order{
+   margin: 30px;
+}
