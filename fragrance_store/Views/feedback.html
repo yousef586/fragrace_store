@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="feedback.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+           <p class="text">How would you rate this website?</p>
+           <div class="emoji">
+               <div onclick=click>😍</div>
+               <div onclick=click>😐</div>
+               <div onclick=click>😕</div>
+           </div>
+        </div>
+        <!-- Add a form element -->
+        <form action="/feedback" method="POST">
+            <textarea class="textarea" name="feedback" cols="30" rows="3" placeholder="write your opinion!"></textarea>
+            <button type="submit" class="btn" onclick=dooo>Send</button>
+        </form>
+    </div>
+    <script >
+        const container = document.querySelector('.container');
+const emoji = document.querySelector('.emoji');
+const textarea = document.querySelector('.textarea');
+const btn = document.querySelector('.btn');
+emoji.addEventListener('click', (e) => {
+    if (e.target.parentElement.classList.contains('emoji')) {
+        // Toggle the textarea active class
+        textarea.classList.toggle('textarea--active');
+        btn.classList.toggle('btn--active');
+    }
+});
+
+container.addEventListener('mouseleave', () => {
+    textarea.classList.remove('textarea--active');
+    btn.classList.remove('btn--active');
+});
+
+btn.addEventListener('dooo', () => {
+    alert("Thanks for your feedback")
+});
+
+    </script>
+</body>
+</html>

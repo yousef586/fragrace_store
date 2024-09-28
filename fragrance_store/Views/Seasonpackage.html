@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stye.css">
+    <title></title>
+</head>
+<body>
+   <nav>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <div class="navtop">
+      <!-- Existing logo -->
+      <div class="navitem">
+          <img src="./img/aromachic2.jpg" width="120" height="60" alt="">
+      </div>
+      <!-- Search input and icon -->
+      <div class="search" style="margin-left: -90px;">
+          <input type="text" placeholder="search..." height="15" class="inputSearch">
+          <img src="./img/search.png" width="20" height="20" alt="">
+      </div>
+      <!-- Wrapper for the new button and login button side by side -->
+      <div class="navitem">
+          <!-- New image button -->
+          <a href="/checkout" style="background-color: black;">
+              <img src="./img/cart.gif" alt="New Button" style="height: 60px; width: 60px;">
+          </a>
+          <!-- Existing login button immediately next to the new button -->
+          <a href="/login">
+              <img src="./img/sign.png" alt="Login Button" style="height: 30px; width: 30px; border-radius: 50%;">
+          </a>
+      </div>
+  </div>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <div class="navBottom">
+
+       <h3 class="menuItem"><a href="/men"><button type="button" style="color: white;background-color: black;border:1px solid;border-color: black;" >MEN</button></a></h3>
+        <h3 class="menuItem"><a href="/WOMEN"><button type="button" style="color: white;background-color: black;border:1px solid;border-color: black;" >WOMEN</button></a></h3>
+        <h3 class="menuItem"><a href="/UNISEX"><button type="button" style="color: white;background-color: black;border:1px solid;border-color: black;" >UNSEX</button></a></h3>
+        <h3 class="menuItem"><a href="/Seasonpackage"><button type="button" style="color: white;background-color: black;border:1px solid;border-color: black;" >SEASON PACKAGE</button></a></h3>
+        <h3 class="menuItem"><a href="/dropouts"><button type="button" style="color: white;background-color: black;border:1px solid;border-color: black;" >NEW DROPOUT</button></a></h3>
+
+    </div>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <div class="product-container">
+      <div class="product-item" data-name="the summer combo" data-price="950">
+            <img src="./img/summ.jpeg" alt="Product 1">
+            <h2>The Summer Combo</h2>
+            <p style="color: aquamarine;">Louis Vuitton’s Attrape-Reves layered with Lancome La Vie Est Belle for a juicy, bright & luxurious vibe that’ll have you smelling like expensive fruits & flowers this summer with a smooth minor addition of gourmand kisses of cacao, praline & vanilla</p>
+            <p style="color: white;">950 egp</p>
+            <p style="color: red;"><del>1350 egp</del></p>
+            <button onclick="saveAttributes(this)">Add to Cart</button>
+        </div>
+        <div class="product-item" data-name="Autumn warmth combo" data-price="1850">
+            <img src="./img/autumn.jpg" alt="Product 2">
+            <h2>Autumn warmth Combo</h2>
+            <p style="color: burlywood;">yves saint laurent, Tobacco honey and Prada elite woody smell of the autumn </p>
+            <p style="color: white;">1850</p>
+            <p style="color: red;"><del>2450</del></p>
+            <button onclick="saveAttributes(this)">Add to Cart</button>
+        </div>
+    </div>
+
+    <script >
+        function saveAttributes(button) {
+    const productDiv = button.closest('.product-item');
+    const productName = productDiv.getAttribute('data-name');
+    const productPrice = parseFloat(productDiv.getAttribute('data-price'));
+
+    // Retrieve or initialize the cart
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.findIndex(p => p.name === productName);
+    if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity += 1;  // Increment the quantity
+    } else {
+        cart.push({ name: productName, price: productPrice, quantity: 1 });  // Add new item
+    }
+
+    // Save the updated cart back to local storage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('ADDED TO CART SUCCESSFULLY!');
+}
+
+// Function to display the contents of the cart on the checkout page
+function displayCart() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const tableBody = document.getElementById('cartItems').querySelector('tbody');
+    const totalPriceElement = document.getElementById('totalPrice').querySelector('span');
+
+    // Clear existing table rows
+    tableBody.innerHTML = '';
+    let total = 0;
+
+    if (cartItems.length === 0) {
+        const row = tableBody.insertRow();
+        const cell = row.insertCell(0);
+        cell.colSpan = 5;
+        cell.textContent = 'No items in your cart.';
+    } else {
+        cartItems.forEach((item, index) => {
+            const row = tableBody.insertRow();
+            row.insertCell(0).textContent = item.name;
+            row.insertCell(1).textContent = `${item.price} EGP`;
+            row.insertCell(2).textContent = item.quantity;
+            const totalItemPrice = item.price * item.quantity;
+            row.insertCell(3).textContent = `${totalItemPrice} EGP`;
+            const actionCell = row.insertCell(4);
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', function() { removeFromCart(index); });
+            actionCell.appendChild(removeButton);
+
+            total += totalItemPrice;
+        });
+    }
+
+    totalPriceElement.textContent = `${total} EGP`;
+}
+
+// Function to remove an item from the cart
+function removeFromCart(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);  // Remove the item at the given index
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();  // Refresh the cart display
+}
+
+// Placeholder function for checkout action
+function checkout() {
+    alert('Proceed to payment.');
+}
+
+document.addEventListener('DOMContentLoaded', displayCart);  // Ensure the cart is displayed when the page loads
+    </script>
+  </body>
